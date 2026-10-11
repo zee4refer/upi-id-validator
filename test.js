@@ -1,0 +1,11 @@
+const assert = require('assert');
+const { validateUpiId } = require('./upi-id');
+let r = validateUpiId('demo.shop@okhdfcbank');
+assert.ok(r.valid); assert.strictEqual(r.app, 'Google Pay'); assert.strictEqual(r.bank, 'HDFC Bank');
+r = validateUpiId('9876543210@ybl');
+assert.ok(r.valid); assert.ok(r.looksLikeMobile); assert.strictEqual(r.app, 'PhonePe');
+assert.ok(!validateUpiId('no-at-sign').valid);
+assert.ok(!validateUpiId('a@okhdfcbank').valid);
+r = validateUpiId('someone@newbank');
+assert.ok(r.valid); assert.ok(!r.knownHandle);
+console.log('upi-id: all tests passed');

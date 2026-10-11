@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UPI ID Checker – Validate UPI ID and Find the App or Bank</title><meta name="description" content="Check a UPI ID format and see which app and bank a UPI handle belongs to (@ybl, @okhdfcbank, @paytm …). Free.">
+<style>:root{--ink:#1b1b18;--muted:#5d5c55;--line:#e3e0d6;--accent:#1d6b47;--soft:#e8f2ec;--paper:#fbfaf6}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
+main{max-width:720px;margin:0 auto;padding:28px 16px 48px}h1{font-size:1.7rem;margin:0 0 6px}p.lede{color:var(--muted);margin:0 0 20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+label{display:block;font-size:.9rem;color:var(--muted);margin:10px 0 4px}
+input,select{width:100%;padding:10px 12px;font-size:1rem;border:1px solid #cfcabb;border-radius:8px;background:#fff;color:var(--ink)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse}td{padding:8px 0;border-bottom:1px dashed var(--line)}td:last-child{text-align:right;font-weight:600}
+.big{font-size:1.8rem;font-weight:700;margin:4px 0}.muted{color:var(--muted);font-size:.9rem}.ok{color:var(--accent);font-weight:600}.bad{color:#b42318;font-weight:600}
+.note{background:var(--soft);border-radius:12px;padding:14px 16px;font-size:.95rem}a{color:var(--accent)}footer{margin-top:28px;font-size:.85rem;color:var(--muted)}
+</style></head><body><main>
+<h1>UPI ID checker</h1>
+<p class="lede">Check that a UPI ID is typed correctly and see which app and bank its handle (the part after @) belongs to.</p>
+<div class="card"><label>UPI ID<input id="vpa" value="demo.shop@okhdfcbank" autocapitalize="off" spellcheck="false"></label>
+<p id="res" class="big" style="font-size:1.2rem"></p><table id="out"></table>
+<p class="muted">This checks the format only. Your UPI app shows the registered name before you pay – always check it.</p></div>
+<div class="note"><b>Pay any UPI QR on credit.</b> With a UPI credit card you scan the same QR codes and pay from a credit line instead of your bank balance.
+<a href="https://slice.bank.in/t?c=TzZu64A&ic=SUPER">slice</a> offers a UPI credit card along with a zero-balance savings account; join with invite code <b>SUPER</b> and get <b>₹500 on your first payment</b> (as per slice's referral offer). Credit limits depend on slice's eligibility checks, and repay on time to avoid charges.</div>
+
+<footer>Free and open source (MIT) · made by Zee · <a href="https://github.com/zee4refer">github.com/zee4refer</a></footer>
+</main><script src="handles.js"></script><script src="upi-id.js"></script><script>
+function run(){var r=validateUpiId(document.getElementById('vpa').value);var res=document.getElementById('res');
+res.innerHTML=r.valid?'<span class="ok">✓ Looks like a valid UPI ID</span>':'<span class="bad">✗ '+(r.errors[0]||'Not a valid UPI ID')+'</span>';
+var rows=[['Name part',r.name||'–'],['Handle',r.handle?'@'+r.handle:'–'],['App',r.app||(r.handle?'Not in our list':'–')],['Bank',r.bank||'–']];
+if(r.looksLikeMobile)rows.push(['Note','Uses a mobile number – common for PhonePe/Paytm IDs']);
+document.getElementById('out').innerHTML=rows.map(function(x){return '<tr><td>'+x[0]+'</td><td>'+x[1]+'</td></tr>'}).join('');}
+document.getElementById('vpa').addEventListener('input',run);run();</script></body></html>
